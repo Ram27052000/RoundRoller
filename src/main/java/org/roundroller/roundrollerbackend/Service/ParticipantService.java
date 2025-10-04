@@ -47,6 +47,7 @@ public class ParticipantService {
         participantResponseDTO.setNames(participant.stream()
                 .map(participant1 -> participant1.getParticipantName()).toList());
         participantResponseDTO.setCount(participant.size());
+        participantResponseDTO.setIds(participant.stream().map(p -> p.getParticipantId()).toList());
         return participantResponseDTO;
     }
 }
