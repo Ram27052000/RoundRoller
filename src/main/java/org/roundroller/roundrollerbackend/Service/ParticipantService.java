@@ -40,7 +40,13 @@ public class ParticipantService {
         return participantResponseDTO;
     }
 
-    public List<Participant> retrieveAllParticipants() {
-        return participantRepository.findAll();
+    public ParticipantResponseDTO retrieveAllParticipants() {
+
+        ParticipantResponseDTO participantResponseDTO = new ParticipantResponseDTO();
+        List<Participant> participant =  participantRepository.findAll();
+        participantResponseDTO.setNames(participant.stream()
+                .map(participant1 -> participant1.getParticipantName()).toList());
+        participantResponseDTO.setCount(participant.size());
+        return participantResponseDTO;
     }
 }

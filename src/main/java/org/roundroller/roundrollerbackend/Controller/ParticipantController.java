@@ -29,7 +29,8 @@ public class ParticipantController {
     }
 
     @GetMapping("/getAllParticipants")
-    public List<Participant> getParticipants(){
-        return participantService.retrieveAllParticipants();
+    public ResponseEntity<ParticipantResponseDTO> getParticipants(){
+        ParticipantResponseDTO participantResponseDTO =  participantService.retrieveAllParticipants();
+        return ResponseEntity.status(HttpStatus.OK).body(participantResponseDTO);
     }
 }
