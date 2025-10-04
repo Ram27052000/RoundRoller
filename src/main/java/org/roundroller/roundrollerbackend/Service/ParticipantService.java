@@ -39,4 +39,8 @@ public class ParticipantService {
 
         return participantResponseDTO;
     }
+
+    public List<Participant> retrieveAllParticipants() {
+        return participantRepository.findAll();
+    }
 }
