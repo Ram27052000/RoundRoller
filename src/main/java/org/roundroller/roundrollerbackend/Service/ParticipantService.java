@@ -53,39 +53,6 @@ public class ParticipantService {
         return participantResponseDTO;
     }
 
-//    public RollResponseDTO rollDice(){
-//        RollResponseDTO rollResponseDTO = new RollResponseDTO();
-//        List<Participant> participants = participantRepository.findAll();
-//        List<Long> participantIds = participants.stream()
-//                .filter(participant -> !participant.isSelected())
-//                    .map(p -> p.getParticipantId()).toList();
-//        if(!participantIds.isEmpty()) {
-//            Random random = new Random();
-//            int randomIndex = random.nextInt(participantIds.size());
-//            Long selectedId = participantIds.get(randomIndex);
-//            Participant participant = participantRepository.findByParticipantId(selectedId);
-//            participant.setSelected(true);
-//            participantRepository.save(participant);
-//            rollResponseDTO.setParticipantID(selectedId);
-//            rollResponseDTO.setName(participant.getParticipantName());
-//            rollResponseDTO.setRemainingParticipantCount(participantIds.size()-1);
-//            rollResponseDTO.setCycleComplete(false);
-//            return rollResponseDTO;
-//        }
-//        else{
-//            for(Participant participant : participants){
-//                    participant.setSelected(false);
-//            }
-//            participantRepository.saveAll(participants);
-//        }
-//        return rollDice();
-//    }
-
-
- //Below is the optimized code -> Only few db calls , not major use of java streams , below code would be
-//    fine even if the db grows
-
-
     public RollResponseDTO rollDice(){
         RollResponseDTO rollResponseDTO = new RollResponseDTO();
         Participant participant = participantRepository.findRandomUnselectedId();
