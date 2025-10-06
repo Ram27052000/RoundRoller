@@ -2,13 +2,11 @@ package org.roundroller.roundrollerbackend.Controller;
 
 import org.roundroller.roundrollerbackend.DTO.ParticipantRequestDTO;
 import org.roundroller.roundrollerbackend.DTO.ParticipantResponseDTO;
-import org.roundroller.roundrollerbackend.Model.Participant;
+import org.roundroller.roundrollerbackend.DTO.RollResponseDTO;
 import org.roundroller.roundrollerbackend.Service.ParticipantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/participants")
@@ -33,4 +31,11 @@ public class ParticipantController {
         ParticipantResponseDTO participantResponseDTO =  participantService.retrieveAllParticipants();
         return ResponseEntity.status(HttpStatus.OK).body(participantResponseDTO);
     }
+
+    @PostMapping("/rollDice")
+    public ResponseEntity<RollResponseDTO> rollDice(){
+        RollResponseDTO rollResponseDTO = participantService.rollDice();
+        return ResponseEntity.ok(rollResponseDTO);
+    }
+
 }
