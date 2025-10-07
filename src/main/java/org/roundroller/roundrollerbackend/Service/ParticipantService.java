@@ -3,6 +3,7 @@ package org.roundroller.roundrollerbackend.Service;
 import org.roundroller.roundrollerbackend.DTO.ParticipantRequestDTO;
 import org.roundroller.roundrollerbackend.DTO.ParticipantResponseDTO;
 import org.roundroller.roundrollerbackend.DTO.RollResponseDTO;
+import org.roundroller.roundrollerbackend.Exception.ParticipantNotFoundException;
 import org.roundroller.roundrollerbackend.Model.Participant;
 import org.roundroller.roundrollerbackend.Repository.participantRepository;
 import org.springframework.stereotype.Service;
@@ -53,12 +54,16 @@ public class ParticipantService {
         return participantResponseDTO;
     }
 
+    @Transactional
     public RollResponseDTO rollDice(){
         RollResponseDTO rollResponseDTO = new RollResponseDTO();
         Participant participant = participantRepository.findRandomUnselectedId();
         if(participant == null){
             participantRepository.resetAllParticipants();
             participant = participantRepository.findRandomUnselectedId();
+            if(participant == null){
+                throw new ParticipantNotFoundException("Participant Not found");
+            }
             rollResponseDTO.setCycleComplete(true);
         }
         else{
@@ -68,12 +73,8 @@ public class ParticipantService {
         participantRepository.save(participant);
         rollResponseDTO.setName(participant.getParticipantName());
         rollResponseDTO.setParticipantID(participant.getParticipantId());
-        List<Participant> participantsCount = participantRepository
-                .findAll()
-                    .stream()
-                        .filter(p -> !p.isSelected()).toList();
-
-        rollResponseDTO.setRemainingParticipantCount(participantsCount.size());
+        int remainingParticipant = participantRepository.countBySelectedFalse();
+        rollResponseDTO.setRemainingParticipantCount(remainingParticipant);
         return rollResponseDTO;
     }
 
