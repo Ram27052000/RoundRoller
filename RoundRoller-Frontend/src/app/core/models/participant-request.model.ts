@@ -1,3 +1,3 @@
 export interface ParticipantRequest{
-    names: String[];
+    names: string[];
 }
