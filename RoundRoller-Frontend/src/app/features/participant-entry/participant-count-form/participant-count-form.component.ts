@@ -2,8 +2,6 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
-import {count} from 'rxjs';
-
 @Component({
   selector: 'app-participant-count-form',
   imports: [MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatButton],
@@ -24,8 +22,9 @@ export class ParticipantCountFormComponent {
   countPeople() {
     if(this.countForm.valid){
       const countValue = this.countForm.get('count')?.value;
-      this.countOfParticipants.emit(countValue);
       console.log(`count value ${countValue}`);
+      this.countOfParticipants.emit(countValue);
+
     }
   }
 }
