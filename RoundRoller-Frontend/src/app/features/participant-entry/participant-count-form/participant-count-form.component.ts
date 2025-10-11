@@ -24,7 +24,6 @@ export class ParticipantCountFormComponent {
       const countValue = this.countForm.get('count')?.value;
       console.log(`count value ${countValue}`);
       this.countOfParticipants.emit(countValue);
-
     }
   }
 }
