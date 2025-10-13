@@ -1,3 +1,9 @@
-<app-participant-count-form (countOfParticipants)="receiveCount($event)">
+<div>
+  <app-participant-count-form (countOfParticipants)="receiveCount($event)"></app-participant-count-form>
+</div>
 
-</app-participant-count-form>
+<app-participant-name-form
+  *ngIf="participantCount"
+  [participantCount]="participantCount">
+</app-participant-name-form>
+

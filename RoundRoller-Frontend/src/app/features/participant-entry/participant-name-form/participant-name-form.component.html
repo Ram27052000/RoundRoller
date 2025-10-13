@@ -1,1 +1,9 @@
-<p>participant-name-form works!</p>
+<form class="example-form" (ngSubmit)="onSubmit()">
+  <div *ngFor="let control of namesFormArray.controls; let i = index">
+    <mat-form-field class="example-full-width">
+      <mat-label>Participant {{i+1}}</mat-label>
+        <input matInput placeholder="Enter Participant Name" [formControl]="control">
+    </mat-form-field>
+  </div>
+  <button mat-flat-button color="primary" type="submit" [disabled]="namesFormArray.invalid">Submit</button>
+</form>
