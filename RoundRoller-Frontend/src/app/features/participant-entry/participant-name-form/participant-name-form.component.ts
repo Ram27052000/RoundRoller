@@ -3,8 +3,8 @@ import {FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, V
 import {ParticipantApiService} from '../../../core/services/participant-api.service';
 import {Router} from '@angular/router';
 import {ParticipantResponse} from '../../../core/models/participant-response.model';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {NgForOf} from '@angular/common';
+import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 
 @Component({
@@ -17,6 +17,8 @@ import {MatButton} from '@angular/material/button';
     ReactiveFormsModule,
     FormsModule,
     MatButton,
+    MatError,
+    NgIf,
   ],
   templateUrl: './participant-name-form.component.html',
   styleUrl: './participant-name-form.component.css'
