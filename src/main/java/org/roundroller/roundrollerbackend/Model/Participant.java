@@ -18,5 +18,5 @@ public class Participant {
 
     private String participantName;
 
-    private boolean Selected;
+    private boolean selected;
 }
