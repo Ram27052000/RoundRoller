@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class RollResponseDTO {
 
-    private Long participantID;
+    private Long participantId;
 
     private String name;
 

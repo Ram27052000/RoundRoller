@@ -5,20 +5,20 @@ import org.roundroller.roundrollerbackend.DTO.ParticipantResponseDTO;
 import org.roundroller.roundrollerbackend.DTO.RollResponseDTO;
 import org.roundroller.roundrollerbackend.Exception.ParticipantNotFoundException;
 import org.roundroller.roundrollerbackend.Model.Participant;
-import org.roundroller.roundrollerbackend.Repository.participantRepository;
+import org.roundroller.roundrollerbackend.Repository.ParticipantRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 @Service
 public class ParticipantService {
 
-    private final participantRepository participantRepository;
+    private final ParticipantRepository participantRepository;
 
-    public ParticipantService(participantRepository participantRepository) {
+    public ParticipantService(ParticipantRepository participantRepository) {
         this.participantRepository = participantRepository;
     }
 
@@ -72,7 +72,7 @@ public class ParticipantService {
         participant.setSelected(true);
         participantRepository.save(participant);
         rollResponseDTO.setName(participant.getParticipantName());
-        rollResponseDTO.setParticipantID(participant.getParticipantId());
+        rollResponseDTO.setParticipantId(participant.getParticipantId());
         int remainingParticipant = participantRepository.countBySelectedFalse();
         rollResponseDTO.setRemainingParticipantCount(remainingParticipant);
         return rollResponseDTO;
