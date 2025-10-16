@@ -64,6 +64,9 @@ export class ParticipantNameFormComponent implements OnChanges, OnInit{
               console.log('navigation failed');
             }
           });
+        },
+        error: (err)=>{
+          console.error(`Error while submitting the name ${err}`);
         }
       });
     }
