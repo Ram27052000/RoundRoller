@@ -1,0 +1,15 @@
+<form class="example-form" (ngSubmit)="onSubmit()">
+  <div *ngIf="participantCount >=2">
+    <div *ngFor="let control of namesFormArray.controls; let i = index">
+      <mat-form-field class="example-full-width">
+        <mat-label>Participant {{ i + 1 }}</mat-label>
+        <input matInput placeholder="Enter Participant Name" [formControl]="control">
+        <mat-error *ngIf="control.hasError('minlength')">Name must be at least 2 characters</mat-error>
+        <mat-error *ngIf="control.hasError('required')">Please enter the name before submitting the form</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <button *ngIf="participantCount >=2" mat-flat-button color="primary" type="submit"
+          [disabled]="namesFormArray.invalid">Submit
+  </button>
+</form>
