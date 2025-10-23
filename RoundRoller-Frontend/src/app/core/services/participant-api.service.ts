@@ -23,7 +23,7 @@ export class ParticipantApiService {
   }
 
   getParticipants(): Observable<ParticipantResponse>{
-      const url = '/api/participants/getAllParticipants'
+      const url = `${this.api}/api/participants/getAllParticipants`
       return this.http.get<ParticipantResponse>(url).pipe((catchError(error =>{
         console.log(`Error while during the response ${error}`);
         return throwError(() => error);

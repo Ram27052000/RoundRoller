@@ -3,3 +3,4 @@ export interface ParticipantResponse {
   count: number;
   names: string[];
 }
+
