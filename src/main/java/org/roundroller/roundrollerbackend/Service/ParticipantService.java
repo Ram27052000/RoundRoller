@@ -24,20 +24,20 @@ public class ParticipantService {
 
     @Transactional
     public ParticipantResponseDTO addParticipant
-            (ParticipantRequestDTO participantRequestDTO){
+            (ParticipantRequestDTO participantRequestDTO) {
         List<Participant> participants = new ArrayList<>();
-        for(String name : participantRequestDTO.getNames()){
+        for (String name : participantRequestDTO.getNames()) {
             Participant participant = new Participant();
             participant.setParticipantName(name);
-            participant.setSelected(false); //default value would be false but for clear clarity we are setting it here
+            participant.setSelected(false);
             participants.add(participant);
         }
-        List<Participant> savedParticipant  = participantRepository.saveAll(participants);
+        List<Participant> savedParticipant = participantRepository.saveAll(participants);
 
         ParticipantResponseDTO participantResponseDTO = new ParticipantResponseDTO();
         participantResponseDTO.setNames(savedParticipant
                 .stream()
-                    .map(participant -> participant.getParticipantName()).toList());
+                .map(participant -> participant.getParticipantName()).toList());
         participantResponseDTO.setCount(savedParticipant.size());
 
         return participantResponseDTO;
@@ -46,7 +46,7 @@ public class ParticipantService {
     public ParticipantResponseDTO retrieveAllParticipants() {
 
         ParticipantResponseDTO participantResponseDTO = new ParticipantResponseDTO();
-        List<Participant> participant =  participantRepository.findAll();
+        List<Participant> participant = participantRepository.findAll();
         participantResponseDTO.setNames(participant.stream()
                 .map(participant1 -> participant1.getParticipantName()).toList());
         participantResponseDTO.setCount(participant.size());
@@ -55,27 +55,25 @@ public class ParticipantService {
     }
 
     @Transactional
-    public RollResponseDTO rollDice(){
-        RollResponseDTO rollResponseDTO = new RollResponseDTO();
-        Participant participant = participantRepository.findRandomUnselectedId();
-        if(participant == null){
+    public RollResponseDTO rollDice() {
+        int unselected = participantRepository.countBySelectedFalse();
+        if (unselected == 0) {
             participantRepository.resetAllParticipants();
-            participant = participantRepository.findRandomUnselectedId();
-            if(participant == null){
-                throw new ParticipantNotFoundException("Participant Not found");
+            if (participantRepository.count() == 0) {
+                throw new ParticipantNotFoundException("No participants available. " +
+                        "Please add participants first.");
             }
-            rollResponseDTO.setCycleComplete(true);
         }
-        else{
-            rollResponseDTO.setCycleComplete(false);
+        Participant participant = participantRepository.findRandomUnselectedId();
+        if (participant == null) {
+            throw new ParticipantNotFoundException("Failed to find participant after reset");
         }
         participant.setSelected(true);
         participantRepository.save(participant);
-        rollResponseDTO.setName(participant.getParticipantName());
-        rollResponseDTO.setParticipantId(participant.getParticipantId());
-        int remainingParticipant = participantRepository.countBySelectedFalse();
-        rollResponseDTO.setRemainingParticipantCount(remainingParticipant);
-        return rollResponseDTO;
+        int remainingCount = participantRepository.countBySelectedFalse();
+        boolean cycleComplete = (remainingCount == 0);
+        return new RollResponseDTO(participant.getParticipantId(),
+                participant.getParticipantName(), remainingCount, cycleComplete);
     }
 
 }

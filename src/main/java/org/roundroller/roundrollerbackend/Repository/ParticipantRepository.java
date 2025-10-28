@@ -1,5 +1,6 @@
 package org.roundroller.roundrollerbackend.Repository;
 
+import jakarta.transaction.Transactional;
 import org.roundroller.roundrollerbackend.Model.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,7 +15,8 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Participant findRandomUnselectedId();
 
     @Modifying
-    @Query(value = "UPDATE Participant p set p.selected = false ")
+    @Transactional
+    @Query(value = "UPDATE Participant p SET p.selected = false ")
     void resetAllParticipants();
 
     int countBySelectedFalse();
