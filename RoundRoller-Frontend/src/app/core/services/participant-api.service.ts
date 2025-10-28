@@ -12,8 +12,10 @@ export class ParticipantApiService {
 
   constructor(private http: HttpClient) { }
 
+  private readonly api = 'http://localhost:8080';
+
   addParticipants(participant: ParticipantRequest) : Observable<ParticipantResponse>{
-      const url = '/api/participants/addParticipants'
+      const url = `${this.api}/api/participants/addParticipants`
       return this.http.post<ParticipantResponse>(url,participant).pipe(catchError(error => {
         console.log(`Error while during the response ${error}`);
         return throwError(() => error);
@@ -21,7 +23,7 @@ export class ParticipantApiService {
   }
 
   getParticipants(): Observable<ParticipantResponse>{
-      const url = '/api/participants/getAllParticipants'
+      const url = `${this.api}/api/participants/getAllParticipants`
       return this.http.get<ParticipantResponse>(url).pipe((catchError(error =>{
         console.log(`Error while during the response ${error}`);
         return throwError(() => error);
