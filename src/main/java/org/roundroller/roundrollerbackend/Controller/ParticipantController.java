@@ -37,5 +37,4 @@ public class ParticipantController {
         RollResponseDTO rollResponseDTO = participantService.rollDice();
         return ResponseEntity.ok(rollResponseDTO);
     }
-
 }

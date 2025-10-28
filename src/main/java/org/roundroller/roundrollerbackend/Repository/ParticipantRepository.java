@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
-//    Participant findByParticipantId(long id);
 
-    @Query(value = "SELECT p FROM Participant p WHERE p.selected = false ORDER BY RAND() LIMIT 1")
+    @Query(value = "SELECT * FROM Participant p WHERE selected = false ORDER BY RANDOM () LIMIT 1 ",
+            nativeQuery = true)
     Participant findRandomUnselectedId();
 
     @Modifying
