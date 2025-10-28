@@ -16,7 +16,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Participant p SET p.selected = false ")
+    @Query("UPDATE Participant p SET p.selected = false")
     void resetAllParticipants();
 
     int countBySelectedFalse();
