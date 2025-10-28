@@ -1,8 +1,0 @@
-<form [formGroup]="countForm" (ngSubmit)="countPeople()" class="example-form">
-  <mat-form-field class="example-full-width">
-    <mat-label>How many participants ?</mat-label>
-    <input type="number" matInput placeholder="Enter number between 2 - 20" formControlName="count">
-    <mat-error *ngIf="countForm.get('count')?.value<=1">Minimum 2 Participants Required</mat-error>
-  </mat-form-field>
-</form>
-
